@@ -1,0 +1,6 @@
+<center>
+  <h1>Puppies!</h1>
+  <% @dog_list.each do |p| %>
+    <%= p.name %> is a <%= p.breed %> (<%= p.age %> days old).<br />
+  <% end %>
+</center>
