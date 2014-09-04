@@ -20,9 +20,9 @@ module TheMill
     end
 
     def accept!
-      if @status == :pending && TheMill::RequestContainer.holding_queue.empty?
+      if self.pending? && TheMill::RequestContainer.holding_queue.empty? && TheMill::PuppyContainer.puppy_info[@breed][:list].length > 0
         @status = :accepted
-      elsif @status == :on_hold
+      elsif self.on_hold? && TheMill::PuppyContainer.puppy_info[@breed][:list].length > 0
         @status = :accepted
       else 
       puts "Please review the requests in the holding queue"
