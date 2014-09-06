@@ -30,7 +30,8 @@ module TheMill
       CREATE TABLE IF NOT EXISTS requests(
       id serial,
       breed text,
-      status text)
+      status text
+      );
     ])
     end
 
@@ -41,16 +42,15 @@ module TheMill
 
     
     def add_request(request)
-     pups_available = TheMill.puppy_repo.pup_log.select {|p| p.breed == request.breed}
+      build_req_tables
+     pups_available = TheMill.puppy_repo.pup_log.select {|p| p.breed == request.breed.to_s}
 
        if pups_available.empty?
         request.hold!
       end
 
       @db.exec(%q[
-        INSERT INTO requests (breed, status)
-        VALUES ($1, $2);
-        ], [request.breed, request.status])
+        INSERT INTO requests (breed, status) VALUES ($1, $2);], [request.breed, request.status])
     end
 
     def show_completed_requests
@@ -74,14 +74,4 @@ module TheMill
   end
 end
 
-  # def build_breed_tables
-  #   @db.exec(%q[
-  #   CREATE TABLE IF NOT EXISTS breedprices(
-  #     id serial,
-  #     breed text,
-  #     price money 
-  #     ##RETURNING price; [breed, price]
-  #     )
-  #     ##result.entries.first["price"].to_i
-  #   ])
-  # end
+  

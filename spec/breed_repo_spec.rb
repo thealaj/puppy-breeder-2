@@ -14,7 +14,7 @@ describe TheMill::Repos::BreedLog do
     
     result = breedlog.breed_log
 
-  expect(result.price).to eq("$80.00")
+  expect(result.first.price).to eq("$80.00")
   end 
 
   it "allows Breeder to view the price of a breed" do 
