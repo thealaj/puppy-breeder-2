@@ -1,15 +1,20 @@
 require_relative "spec_helper.rb"
 
 describe TheMill::Repos::RequestLog do
-    before(:each) { TheMill::Repos::RequestLog.new.destroy }
-    before(:each) { TheMill::Repos::PuppyLog.new.destroy }
-    before(:each) { TheMill::Repos::BreedLog.new.destroy }
+    before(:each) { TheMill.request_repo.destroy }
+    before(:each) { TheMill.puppy_repo.destroy }
+    before(:each) { TheMill.breed_repo.destroy }
 
   it "allows Breeder to add customer requests to the database" do
-    request = TheMill::Request.new(:Goldendoodle)
-    # request_log = TheMill::Repos::RequestLog.new
-    # breed_log = TheMill::Repos::BreedLog.new
-    # pup_log = TheMill::Repos::PuppyLog.new
+    request = TheMill::Request.new(:Daschund)
+    request_log = TheMill.request_repo
+    breed_log = TheMill.breed_repo
+    daschund = TheMill::Breed.new(:Daschund, 80)
+    breed_log.add_breed(daschund)
+    pup_log = TheMill.puppy_repo
+    pup = TheMill::Puppy.new("Joan", 7, :Daschund)
+
+    pup_log.add_puppy(pup)
     request_log.add_request(request)
     result = request_log.log
 

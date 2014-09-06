@@ -57,15 +57,4 @@ module TheMill
 end
 
 
-#
-  # def build_breed_tables
-  #   @db.exec(%q[
-  #   CREATE TABLE IF NOT EXISTS breedprices(
-  #     id serial,
-  #     breed text,
-  #     price money 
-  #     ##RETURNING price; [breed, price]
-  #     )
-  #     ##result.entries.first["price"].to_i
-  #   ])
-  # end
+ 

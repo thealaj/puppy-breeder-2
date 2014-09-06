@@ -15,7 +15,7 @@ module TheMill
         DROP TABLE IF EXISTS requests;
         ])
     end
-    
+
     def build_request(entries) #helper
       entries.map do |req|
         x = TheMill::Request.new(req["breed"])
@@ -41,7 +41,7 @@ module TheMill
 
     
     def add_request(request)
-     pups_available = TheMill::Repos::PuppyLog.pup_log.select {|p| p.breed == request.breed}
+     pups_available = TheMill.puppy_repo.pup_log.select {|p| p.breed == request.breed}
 
        if pups_available.empty?
         request.hold!
