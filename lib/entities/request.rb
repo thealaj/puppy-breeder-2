@@ -19,6 +19,9 @@ module TheMill
       @status == :accepted
     end
 
+#########
+#QUESTION: SHOULD THE ACCEPT METHOD ALSO UPDATE THE DATABASE? OR WOULD THIS FUNCTION ONLY BE USED BEFORE THE REQUEST REPO "ADD REQUEST" METHOD?
+######### 
     def accept!
       @status = :accepted
     end

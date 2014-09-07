@@ -23,13 +23,25 @@ describe TheMill::Repos::RequestLog do
     expect(result.first.status).to eq :pending
   end  
 
-  xit "sets customer request to on hold if, when adding request, there isn't a breed available" do
+  it "sets customer request to on hold if there isn't a breed available when the request is added to the DB" do
      
-    request2 = TheMill::Request.new(:Terrier)
-    TheMill::Repos::RequestLog.add_request(request1)
-    TheMill::RequestContainer.add_request(request2)
+    breed_log = TheMill.breed_repo
+    daschund = TheMill::Breed.new(:Daschund, 80)
+    breed_log.add_breed(daschund)
+    pup_log = TheMill.puppy_repo
+    pup = TheMill::Puppy.new("Joan", 7, :Daschund)
+    pup_log.add_puppy(pup)
 
-      expect(TK).to eq tk
+    request1 = TheMill::Request.new(:Daschund)
+    request2 = TheMill::Request.new(:Terrier)
+    request_log = TheMill.request_repo
+    request_log.add_request(request1)
+    request_log.add_request(request2)
+
+    result = request_log.log
+
+    expect(result.first.status).to eq :pending
+    expect(result.last.status).to eq :on_hold
  
   end
 
