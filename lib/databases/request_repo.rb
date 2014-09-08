@@ -49,8 +49,10 @@ module TheMill
         request.hold!
       end
 
-      @db.exec(%q[
-        INSERT INTO requests (breed, status) VALUES ($1, $2);], [request.breed, request.status])
+     result = @db.exec(%q[
+        INSERT INTO requests (breed, status) VALUES ($1, $2) RETURNING id;], [request.breed, request.status])
+
+        request.id = result.entries.first["id"].to_i
     end
 
     def show_completed_requests
@@ -70,6 +72,15 @@ module TheMill
         SELECT * FROM requests WHERE status = 'on_hold'])
       build_request(result.entries)
     end
+
+    def self.update_request(status, id)
+      build_req_tables
+      @db.exec(%q[
+        UPDATE requests 
+        SET status = $1 
+        WHERE id = $2;], [status, id])
+    end
+
     end
   end
 end

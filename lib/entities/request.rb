@@ -1,6 +1,6 @@
 module TheMill
   class Request
-    attr_reader :breed, :status
+    attr_accessor :breed, :status, :id
 
     def initialize breed, status=:pending
       @breed = breed
