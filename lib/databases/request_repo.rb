@@ -67,14 +67,13 @@ module TheMill
       build_request(result.entries)
     end
 
-    def self.holding_queue
+    def holding_queue
       result = @db.exec(%q[
         SELECT * FROM requests WHERE status = 'on_hold'])
       build_request(result.entries)
     end
 
-    def self.update_request(status, id)
-      build_req_tables
+    def update_request(status, id)
       @db.exec(%q[
         UPDATE requests 
         SET status = $1 

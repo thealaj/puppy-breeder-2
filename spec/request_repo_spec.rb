@@ -77,16 +77,13 @@ it "shows a list of pending requests" do
 
     request_log = TheMill.request_repo
     request1 = TheMill::Request.new(:Daschund)
-    request2 = TheMill::Request.new(:Terrier)
     request_log.add_request(request1)
-    request_log.add_request(request2)
 
     request_log.update_request("accepted", request1.id)
 
     result = request_log.log
 
     expect(result.first.status).to eq :accepted
-    expect(result.last.status).to eq :on_hold
  
   end
 
